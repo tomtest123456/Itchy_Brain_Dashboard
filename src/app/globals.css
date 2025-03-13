@@ -1,26 +1,27 @@
-@import "tailwindcss";
+/* src/app/globals.css */
+/* Imports Tailwind CSS and applies global styles. */
+/* Sets default appearance (background, text color) for the entire app. */
+/* Ensures consistent styling across all pages. */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Import Tailwind's base styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* GLOBAL STYLES */
+@layer base {
+    /* Set background and text colors */
+    body {
+        @apply bg-background text-text font-inter;
+    }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+    /* Headings (h1, h2, h3) - Primary Font */
+    h1, h2, h3 {
+        @apply font-oswald font-bold text-white;
+    }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    /* Borders (Accents) */
+    .border-accent {
+        @apply border-accent;
+    }
 }

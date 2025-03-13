@@ -1,0 +1,96 @@
+/* 
+    /src/app/dashboard/styles/Dashboard.css
+    ---------------------------------------
+    Grid Layout Styling Guide:
+    
+    1. Grid Container (.layout)
+       - Shows grid lines
+       - No padding/margin to ensure accurate snapping
+    
+    2. Grid Items (.react-grid-item)
+       - No margin/padding to ensure accurate snapping
+       - Visual styles don't affect positioning
+    
+    3. Placeholder (.react-grid-placeholder)
+       - Matches exact grid cell size
+    
+    4. Resize Handle (.react-resizable-handle)
+       - Positioned relative to grid cell
+*/
+
+:root {
+    --grid-columns: 20; /* Default value, will be updated by JavaScript */
+}
+
+/* Grid Container with visible grid lines */
+.layout {
+    background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.4) 1px, transparent 1px),
+        linear-gradient(to bottom, rgb(255, 255, 255, 0.4) 1px, transparent 1px);
+    background-size: calc(100% / var(--grid-columns)) 20px; /* ADJUST GRID LINE ROW HEIGHT HERE */
+    min-height: 800px;
+    background-position: 0 0; /* Ensure grid lines start from top-left corner */
+}
+
+/* Grid Items */
+.react-grid-item {
+    /* Remove default margin/padding */
+    margin : 0 !important;
+    padding: 0 !important;
+    
+    /* Basic styling */
+    background   : rgb(30, 0, 255);
+    border       : 1px solid rgb(208, 255, 0);
+    border-radius: 8px;
+    
+    /* Ensure content fills grid cell */
+    display        : flex;
+    align-items    : stretch;
+    justify-content: stretch;
+    
+    /* Smooth transitions */
+    transition: all 200ms ease;
+    
+    /* Ensure children fill the space */
+    > * {
+        flex     : 1;
+        min-width: 0;  /* Prevent flex item overflow */
+    }
+}
+
+/* Placeholder shown while dragging */
+.react-grid-placeholder {
+    background   : rgba(76, 0, 255, 0.2);
+    border       : 2px dashed rgba(76, 0, 255, 0.4);
+    border-radius: 8px;
+    margin       : 0 !important;
+    padding      : 0 !important;
+}
+
+/* Resize handle in bottom-right corner */
+.react-resizable-handle {
+    position: absolute;
+    bottom  : 5px;
+    right   : 5px;
+    width   : 20px;
+    height  : 20px;
+    cursor  : se-resize;
+    
+    /* Visual indicator */
+    &::after {
+        content      : "";
+        position     : absolute;
+        right        : 3px;
+        bottom       : 3px;
+        width        : 5px;
+        height       : 5px;
+        border-right : 2px solid rgba(255, 255, 255, 0.5);
+        border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+    }
+}
+
+/* Ensure grid container doesn't add unexpected spacing */
+.react-grid-layout {
+    margin : 0 !important;
+    padding: 0 !important;
+}
