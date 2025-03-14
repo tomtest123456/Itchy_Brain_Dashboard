@@ -12,12 +12,12 @@
 @layer base {
     /* Set background and text colors */
     body {
-        @apply bg-background text-text font-inter;
+        @apply bg-col_background text-col_text font-inter;
     }
 
     /* Headings (h1, h2, h3) - Primary Font */
     h1, h2, h3 {
-        @apply font-oswald font-bold text-white;
+        @apply font-inter font-bold;
     }
 
     /* Borders (Accents) */

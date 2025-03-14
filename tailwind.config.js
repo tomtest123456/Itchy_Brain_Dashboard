@@ -14,18 +14,17 @@ module.exports = {
         extend: {
             /* Custom Fonts */
             fontFamily: {
-                inter : ["Inter", "sans-serif"],
-                oswald: ["Oswald", "sans-serif"],
+                inter: ["Inter", "sans-serif"],
             },
 
             /* Custom Colors */
             colors: {
-                background: "#000000",   // Black (Background)
-                text      : "#DCDCDC",   // Platinum (Text)
-                navbar    : "#2A2D38",   // Raisin Black (Navbar)
-                accent    : "#3900BD",   // Medium Blue (Accents/Borders)
-                cta       : "#4C00FF",   // Bright Blue (Buttons/CTA)
-                warning   : "#B30021",   // Firebrick (Warnings/Alerts)
+                col_background: "#000000",   // Black (Background)
+                col_text      : "#DCDCDC",   // Platinum (Text)
+                col_primary   : "#2A2D38",   // Raisin Black (Primary UI)
+                col_secondary : "#3900BD",   // Medium Blue (Secondary Elements)
+                col_accent    : "#4C00FF",   // Bright Blue (Accents, Buttons)
+                col_alert     : "#B30021",   // Firebrick (Alerts/Warnings)
             },
 
             /* Consistent Border Radius */
@@ -38,7 +37,7 @@ module.exports = {
 
             /* Default Container Settings */
             container: {
-                center : true,
+                center: true,
                 padding: "1rem",
             },
         },

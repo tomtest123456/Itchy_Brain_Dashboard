@@ -8,7 +8,7 @@
        - No padding/margin to ensure accurate snapping
     
     2. Grid Items (.react-grid-item)
-       - No margin/padding to ensure accurate snapping
+       - Uses wrapper and inner container for fixed pixel spacing
        - Visual styles don't affect positioning
     
     3. Placeholder (.react-grid-placeholder)
@@ -19,78 +19,54 @@
 */
 
 :root {
-    --grid-columns: 20; /* Default value, will be updated by JavaScript */
+    --grid-columns      : 20;   /* Default value, will be updated by JavaScript */
+    --grid-lines-opacity: 0.4;  /* Default opacity for grid lines */
+    --card-gap          : 2px;  /* Fixed pixel gap for card spacing */
 }
 
 /* Grid Container with visible grid lines */
 .layout {
     background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.4) 1px, transparent 1px),
-        linear-gradient(to bottom, rgb(255, 255, 255, 0.4) 1px, transparent 1px);
-    background-size: calc(100% / var(--grid-columns)) 20px; /* ADJUST GRID LINE ROW HEIGHT HERE */
+        linear-gradient(to right, theme('colors.col_text' / var(--grid-lines-opacity)) 1px, transparent 1px),
+        linear-gradient(to bottom, theme('colors.col_text' / var(--grid-lines-opacity)) 1px, transparent 1px);
+    background-size: calc(100% / var(--grid-columns)) 20px;
     min-height: 800px;
-    background-position: 0 0; /* Ensure grid lines start from top-left corner */
+    background-position: 0 0;
 }
 
 /* Grid Items */
 .react-grid-item {
-    /* Remove default margin/padding */
-    margin : 0 !important;
-    padding: 0 !important;
-    
-    /* Basic styling */
-    background   : rgb(30, 0, 255);
-    border       : 1px solid rgb(208, 255, 0);
-    border-radius: 8px;
-    
-    /* Ensure content fills grid cell */
-    display        : flex;
-    align-items    : stretch;
-    justify-content: stretch;
-    
-    /* Smooth transitions */
-    transition: all 200ms ease;
-    
-    /* Ensure children fill the space */
-    > * {
-        flex     : 1;
-        min-width: 0;  /* Prevent flex item overflow */
-    }
+    @apply m-0 p-0;
+}
+
+/* Grid Item Wrapper - Handles positioning and size */
+.grid-item-wrapper {
+    @apply w-full h-full flex items-center justify-center;
+    padding: var(--card-gap);
+}
+
+/* Grid Item Inner - Handles visual styling and content */
+.grid-item-inner {
+    width: calc(100% - (var(--card-gap) * 2));
+    height: calc(100% - (var(--card-gap) * 2));
+    @apply bg-col_primary border border-col_accent rounded-lg flex items-stretch justify-stretch transition-all duration-200;
 }
 
 /* Placeholder shown while dragging */
 .react-grid-placeholder {
-    background   : rgba(76, 0, 255, 0.2);
-    border       : 2px dashed rgba(76, 0, 255, 0.4);
-    border-radius: 8px;
-    margin       : 0 !important;
-    padding      : 0 !important;
+    @apply bg-col_primary/20 border-2 border-dashed border-col_accent/40 rounded-lg m-0 p-0;
 }
 
 /* Resize handle in bottom-right corner */
 .react-resizable-handle {
-    position: absolute;
-    bottom  : 5px;
-    right   : 5px;
-    width   : 20px;
-    height  : 20px;
-    cursor  : se-resize;
+    @apply absolute bottom-[5px] right-[5px] w-5 h-5 cursor-se-resize;
     
-    /* Visual indicator */
     &::after {
-        content      : "";
-        position     : absolute;
-        right        : 3px;
-        bottom       : 3px;
-        width        : 5px;
-        height       : 5px;
-        border-right : 2px solid rgba(255, 255, 255, 0.5);
-        border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+        @apply content-[''] absolute right-[3px] bottom-[3px] w-[5px] h-[5px] border-r-2 border-b-2 border-col_text/50;
     }
 }
 
 /* Ensure grid container doesn't add unexpected spacing */
 .react-grid-layout {
-    margin : 0 !important;
-    padding: 0 !important;
+    @apply m-0 p-0;
 }
