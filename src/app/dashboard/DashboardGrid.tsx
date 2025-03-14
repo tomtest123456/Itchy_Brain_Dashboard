@@ -31,7 +31,7 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 // Base size configuration (lg breakpoint)
 const BASE_ITEM_SIZE = {
     w: 4,
-    h: 4
+    h: 5
 };
 
 // Breakpoint scaling factors (percentage of lg size)
