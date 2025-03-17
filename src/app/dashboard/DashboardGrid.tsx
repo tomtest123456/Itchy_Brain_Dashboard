@@ -87,6 +87,19 @@ const defaultLayout: Layouts = {
     xxs: generateBreakpointLayout('xxs')
 };
 
+// Create a component mapper to handle different component types
+const ComponentRenderer = ({ type, config }: { type: string, config: any }) => {
+  switch (type) {
+    case 'summary':
+      return <SummaryCard config={config} />;
+    case 'barChart':
+      return <BarChart config={config} />;
+    // Add other cases as needed
+    default:
+      return <div>Unknown component type: {type}</div>;
+  }
+};
+
 export default function DashboardGrid() {
     const gridRef                                   = useRef<HTMLDivElement>(null);
     const [windowSize, setWindowSize]               = useState({ width: 0, height: 0 });
@@ -203,10 +216,7 @@ export default function DashboardGrid() {
                     {Object.entries(COMPONENTS).map(([id, config]) => (
                         <div key={id} className="grid-item-wrapper">
                             <div className="grid-item-inner">
-                                {config.type === 'summary' && (
-                                    <SummaryCard config={config} />
-                                )}
-                                {/* Add other component types here when implemented */}
+                                <ComponentRenderer type={config.type} config={config} />
                             </div>
                         </div>
                     ))}

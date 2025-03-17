@@ -1,0 +1,66 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Next.js
+Tailwind CSS
+ShadCN
+React Grid Layout
+Filetype: .tsx
+
+Only modify code directly relevant to the specific request.
+Avoid changing unrelated functionality.
+Never replace code with placeholders like `// ... rest of the processing ...`.
+Always include complete code.
+Break problems into smaller steps. Think through each step separately before implementing.
+Always provide a complete PLAN with REASONING based on evidence from code and logs before making changes.
+Explain your OBSERVATIONS clearly, then provide REASONING to identify the exact issue.
+Add console logs when needed to gather more information.
+
+When I tell you that you did not fix the problem and to try again, do the following: Reflect on 5-7 different possible sources of the problem, distil those down to 2-3 most likely sources, and then add logs to validate your assumptions. Then implement the code fixes ensuring it fixes our problem, does not unnecessarily impact any other code, causes zero errors, includes comments/headers, and follows the same format/structure/etc. of the rest of our code.
+
+GENERAL GUIDELINES FOR CODE
+Always Preserve Comments and Headers: Keep all existing comments and headers exactly as they are; Add new section headers and inline comments when adding or modifying code; Every file must have 3-line comments at the top summarizing its purpose.
+
+Optimize for Efficiency & Minimalism: Remove any unnecessary code, imports, or dependencies; Keep code clean, modular, and reusable; Avoid redundant logic or excessive re-renders in React.
+
+Maintain Modular & Component-Based Structure: All UI elements (charts, buttons, sidebars, etc.) must be in separate files; Keep files focused on single responsibilities (e.g., `Navbar.tsx` only handles navigation); Only import components where they are actually used.
+
+Maintain Consistent Code Formatting: Always use 4 spaces for indentation; Keep a consistent import structure with external libraries first, internal components second; Ensure proper spacing and organization within files.
+
+Follow Next.js & React Best Practices: Use `"use client"` in components that require hooks (`useState`, `useEffect`); Minimize server-side rendering where unnecessary; Ensure pages only handle layout and logic, while components handle display/UI.
+
+Keep Styling Consistent: Always use Tailwind classes instead of inline styles; Maintain a dark mode-first approach; Use the defined global color scheme from `tailwind.config.js`.
+
+Ensure Routing & Navigation Work Correctly: Always check that navigation links use Next.js `<Link>` for client-side routing; Ensure correct folder structure in `/app`, `/components/`, and `/pages/`.
+
+Keep Chart & Graph Components Functional: Use React Grid Layout for responsiveness; Ensure Nivo charts use correct colors to avoid visibility issues; Make sure charts and graphs update correctly based on dynamic data.
+
+Debugging & Fixes Should Be Logical: Always identify and address root causes rather than patching issues; Check for hydration errors, SSR/CSR mismatches, and dependency conflicts; Restart the Next.js app (`rm -r .next && npm run dev`) after major changes.
+
+Future-Proof Code for Scalability: Use reusable utility functions for repetitive logic; Keep state at the lowest level necessary to avoid unnecessary re-renders; Ensure code is easy to extend when adding new features.
+
+
+GENERAL GUIDELINES FOR ENSURING RESPONSIVE CODE
+Ensure Mobile & Tablet Responsiveness: Fix the dashboard so it scales correctly across mobile and tablet without altering the existing laptop/desktop design; Use Tailwind CSS breakpoints for fluid scaling; Do not use fixed pixel widths or heights; Ensure text, containers, and interactive elements resize properly.
+
+Follow a Mobile-First Approach: Start with mobile-friendly styles (`<640px`), then progressively enhance for larger screens; Use relative units (`rem`, `em`, `%`, `vw`, `vh`) instead of fixed pixels for text, spacing, and layout; Default styles should apply to mobile, with adjustments at `sm: 640px` and above.
+
+Ensure Proper Layout Scaling: Use `flex` and `grid` with `gap`, `justify-*`, and `align-*` for adaptive layouts; Avoid `w-[fixed-px]`, instead use `w-full`, `max-w-*`, or `flex-grow`; Multi-column layouts should stack vertically (`flex-col`) on mobile; Ensure consistent spacing using Tailwind utilities like `p-*`, `m-*`, and `gap-*`.
+
+Text & Font Scaling for Different Devices: Replace fixed font sizes with `text-sm md:text-lg lg:text-xl` for responsive text adjustments; Ensure headings (`h1-h6`) automatically resize for smaller screens; Prevent text overflow using `break-words truncate`; Ensure buttons and inputs remain legible at smaller sizes.
+
+Tables & Charts Must Be Scrollable on Mobile: Add `overflow-x-auto` to tables and chart containers to prevent cutoff issues; Ensure charts resize dynamically with `w-full h-auto min-h-[200px]`; Use Tailwind’s flex/grid utilities to maintain proper aspect ratios; Ensure axis labels do not overlap when screen size is reduced.
+
+Fix Navigation & Sidebar Responsiveness: If using a sidebar, collapse it into a mobile menu (`hidden sm:block`); Use Tailwind classes like `absolute left-0 top-0` for hamburger menus; Ensure navigation links remain accessible and correctly scaled on mobile.
+
+Images & Icons Must Be Responsive: Use `object-cover w-full h-auto` to ensure images scale correctly; Avoid fixed image dimensions, use `max-w-full` to prevent overflow; Ensure icons use scalable units and do not appear too small on mobile.
+
+Ensure Tap-Friendly Interactive Elements: Buttons and inputs must be at least `min-h-[48px]` for accessibility; Adjust padding with `px-4 py-2 sm:px-6 sm:py-3` to maintain proportional spacing across devices; Avoid elements being too close together, ensure `gap-*` is properly applied.
+
+Modify Styles Using Tailwind’s Breakpoints: Apply mobile-specific styles first, then adjust at `sm: 640px`, `md: 768px`, `lg: 1024px`, and `xl: 1280px`; Use `flex-col md:flex-row` patterns for elements that switch layouts on larger screens; Avoid hardcoded desktop styles that break at smaller widths.
+
+Test Across Different Devices: Ensure proper scaling at `375px`, `414px`, `480px` (mobile), `768px`, `834px`, `1024px` (tablet), and `1280px`, `1440px`, `1920px` (laptop/desktop); Use Chrome DevTools (`F12`) to test responsiveness; Ensure layout remains unchanged on laptops while improving mobile usability.
+
+Maintain Existing Design Choices: Do not alter the current desktop layout or visual design; Only adjust styling where required to make the UI responsive; Use Tailwind’s best practices (`w-full`, `flex`, `grid`, `text-*`, `p-*`) to maintain consistency across devices; Ensure code remains modular, maintainable, and scalable.

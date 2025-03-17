@@ -22,9 +22,9 @@ export interface SummaryCardProps {
 
 export default function SummaryCard({ config }: SummaryCardProps) {
     const [selectedMetric, setSelectedMetric] = useState<MetricId>(config.defaultMetric);
-    const { data, isLoading, error } = useComponentData(config.id, selectedMetric);
-    const summaryData = data as SummaryCardData | null;
-    const metricDefinition = AVAILABLE_METRICS[selectedMetric];
+    const { data, isLoading, error }          = useComponentData(config.id, selectedMetric);
+    const summaryData                         = data as SummaryCardData | null;
+    const metricDefinition                    = AVAILABLE_METRICS[selectedMetric];
 
     if (error) {
         return (
@@ -79,6 +79,7 @@ export default function SummaryCard({ config }: SummaryCardProps) {
             shadow-lg
             p-4
         `}>
+            
             {/* Title Section with Metric Selector */}
             <div className={`
                 absolute
