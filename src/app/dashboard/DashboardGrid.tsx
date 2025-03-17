@@ -21,18 +21,13 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { Responsive, WidthProvider, Layout, Layouts } from "react-grid-layout";
-import SummaryCard from "./components/SummaryCard";
+import SummaryCard from "./components/SummaryCard/index";
+import { COMPONENTS } from "./data/componentConfig";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import "./styles/Dashboard.css";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
-
-// Base size configuration (lg breakpoint)
-const BASE_ITEM_SIZE = {
-    w: 4,
-    h: 5
-};
 
 // Breakpoint scaling factors (percentage of lg size)
 const BREAKPOINT_SCALES = {
@@ -52,38 +47,6 @@ const GRID_COLS = {
     xxs: 11    // Scaled from lg (36 * 0.3 ≈ 11)
 };
 
-// Component type definitions
-type ComponentType = 'summary' | 'barChart' | 'lineChart' | 'table' | 'scatter';
-
-interface ComponentConfig {
-    type    : ComponentType;
-    metric  : string;
-    title   : string;
-    baseSize: { w: number; h: number };
-}
-
-// Component configurations
-const COMPONENTS: Record<string, ComponentConfig> = {
-    summary_totalDistance: {
-        type    : 'summary',
-        metric  : 'totalDistance',
-        title   : 'Total Distance',
-        baseSize: BASE_ITEM_SIZE
-    },
-    summary_avgSpeed: {
-        type    : 'summary',
-        metric  : 'avgSpeed',
-        title   : 'Average Speed',
-        baseSize: BASE_ITEM_SIZE
-    },
-    summary_elevationGain: {
-        type    : 'summary',
-        metric  : 'elevationGain',
-        title   : 'Elevation Gain',
-        baseSize: BASE_ITEM_SIZE
-    }
-};
-
 // Generate layout for a specific breakpoint
 function generateBreakpointLayout(breakpoint: keyof typeof GRID_COLS): Layout[] {
     const scale    = BREAKPOINT_SCALES[breakpoint];
@@ -93,8 +56,8 @@ function generateBreakpointLayout(breakpoint: keyof typeof GRID_COLS): Layout[] 
     
     return Object.entries(COMPONENTS).map(([id, config]) => {
         // Scale and round dimensions
-        const w = Math.max(1, Math.round(config.baseSize.w * scale));
-        const h = Math.max(1, Math.round(config.baseSize.h * scale));
+        const w = Math.max(1, Math.round(config.size.w * scale));
+        const h = Math.max(1, Math.round(config.size.h * scale));
         
         // Wrap to next row if exceeding max columns
         if (currentX + w > maxCols) {
@@ -136,7 +99,6 @@ export default function DashboardGrid() {
         if (gridRef.current) {
             const rect = gridRef.current.getBoundingClientRect();
             const computedStyle = window.getComputedStyle(gridRef.current);
-            // Add detailed logging for grid measurements
             console.log('Grid Measurements:', {
                 width         : rect.width,
                 height        : rect.height,
@@ -241,15 +203,10 @@ export default function DashboardGrid() {
                     {Object.entries(COMPONENTS).map(([id, config]) => (
                         <div key={id} className="grid-item-wrapper">
                             <div className="grid-item-inner">
-                                <SummaryCard 
-                                    title={config.title}
-                                    value={id === 'summary_totalDistance' ? '11,847' :
-                                           id === 'summary_avgSpeed' ? '32.1' :
-                                           '1,500'}
-                                    unit={id === 'summary_totalDistance' ? 'km' :
-                                          id === 'summary_avgSpeed' ? 'km/h' :
-                                          'm'}
-                                />
+                                {config.type === 'summary' && (
+                                    <SummaryCard config={config} />
+                                )}
+                                {/* Add other component types here when implemented */}
                             </div>
                         </div>
                     ))}
