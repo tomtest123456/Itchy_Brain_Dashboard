@@ -53,28 +53,28 @@ export const AVAILABLE_METRICS: Record<string, MetricDefinition> = {
     },
     averageSpeed: {
         rawField   : 'average_speed',
-        displayName: 'Average Speed',
+        displayName: 'Avg. Speed',
         unit       : 'km/h',
         formatter  : 'avgSpeed',
         category   : 'Speed'
     },
     maxPower: {
         rawField   : 'max_power',
-        displayName: 'Max Power',
+        displayName: 'Max. Power',
         unit       : 'W',
         formatter  : 'totalDistance',
         category   : 'Power'
     },
     averageHeartRate: {
         rawField   : 'average_heart_rate',
-        displayName: 'Average HR',
+        displayName: 'Avg. HR',
         unit       : 'bpm',
         formatter  : 'totalDistance',
         category   : 'Health'
     },
     averageCadence: {
         rawField   : 'average_cadence',
-        displayName: 'Average Cadence',
+        displayName: 'Avg. Cadence',
         unit       : 'rpm',
         formatter  : 'totalDistance',
         category   : 'Performance'

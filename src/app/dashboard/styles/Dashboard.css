@@ -29,8 +29,8 @@
     background-image: 
         linear-gradient(to right, theme('colors.col_text' / var(--grid-lines-opacity)) 1px, transparent 1px),
         linear-gradient(to bottom, theme('colors.col_text' / var(--grid-lines-opacity)) 1px, transparent 1px);
-    background-size: calc(100% / var(--grid-columns)) 20px;
-    min-height: 800px;
+    background-size    : calc(100% / var(--grid-columns)) 20px;
+    min-height         : 800px;
     background-position: 0 0;
 }
 
@@ -47,7 +47,7 @@
 
 /* Grid Item Inner - Handles visual styling and content */
 .grid-item-inner {
-    width: calc(100% - (var(--card-gap) * 2));
+    width : calc(100% - (var(--card-gap) * 2));
     height: calc(100% - (var(--card-gap) * 2));
     @apply bg-col_primary border border-col_accent rounded-lg flex items-stretch justify-stretch transition-all duration-200;
 }

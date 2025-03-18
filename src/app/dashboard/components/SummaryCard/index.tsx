@@ -77,13 +77,12 @@ export default function SummaryCard({ config }: SummaryCardProps) {
             border border-col_accent
             rounded-lg
             shadow-lg
-            p-4
         `}>
             
             {/* Title Section with Metric Selector */}
             <div className={`
                 absolute
-                top-[5%]
+                top-[2%]
                 w-full
                 text-center
                 flex
@@ -105,13 +104,13 @@ export default function SummaryCard({ config }: SummaryCardProps) {
             {/* Value Display */}
             <div className={`
                 absolute
-                top-[50%]
+                top-[55%]
                 -translate-y-1/2
                 w-full
                 text-center
             `}>
                 <span className={`
-                    text-3xl
+                    text-2xl
                     font-bold
                     text-col_text
                 `}>
@@ -123,9 +122,12 @@ export default function SummaryCard({ config }: SummaryCardProps) {
             {metricDefinition.unit && (
                 <div className={`
                     absolute
-                    bottom-[5%]
+                    bottom-[2%]
                     w-full
                     text-center
+                    flex
+                    items-center
+                    justify-center
                 `}>
                     <span className={`
                         text-xs

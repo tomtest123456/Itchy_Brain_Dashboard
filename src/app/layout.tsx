@@ -23,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body className="bg-col_background text-col_text">
                 <div className="flex h-screen">
                     <Navbar />
-                    <main className="flex-1 overflow-auto p-4">
+                    <main className="flex-1 overflow-auto p-1">
                         <div className="container mx-auto">
                             {children}
                         </div>

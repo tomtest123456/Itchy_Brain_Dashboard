@@ -14,7 +14,7 @@
 
 .summary-card-content {
     @apply flex-1 flex flex-col items-center justify-between;
-    padding: 5px;
+    padding: var(--card-inner-padding);
 }
 
 .summary-card-title {
@@ -33,22 +33,26 @@
 .summary-card-title-text {
     @apply text-xs 
            sm:text-sm 
+           md:text-base
+           lg:text-lg
            font-semibold 
            text-col_text/80 
            truncate;
 }
 
 .summary-card-value-text {
-    @apply text-xl 
-           sm:text-2xl 
-           md:text-3xl 
+    @apply text-2xl
+           sm:text-3xl 
+           md:text-4xl
+           lg:text-5xl
            font-bold 
            text-col_text;
 }
 
 .summary-card-unit-text {
-    @apply text-[10px]
-           sm:text-xs 
+    @apply text-xs
+           sm:text-sm
+           md:text-base
            font-semibold 
            text-col_text/80;
 } 

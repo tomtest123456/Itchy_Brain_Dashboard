@@ -23,6 +23,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Responsive, WidthProvider, Layout, Layouts } from "react-grid-layout";
 import SummaryCard from "./components/SummaryCard/index";
 import { COMPONENTS } from "./data/componentConfig";
+import { SUMMARY_CARD_CONFIG } from "./components/SummaryCard/config";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import "./styles/Dashboard.css";
@@ -40,24 +41,43 @@ const BREAKPOINT_SCALES = {
 
 // Column configuration for different breakpoints
 const GRID_COLS = {
-    lg : 36,
-    md : 28,   // Scaled from lg (36 * 0.8 ≈ 28)
-    sm : 22,   // Scaled from lg (36 * 0.6 ≈ 22)
-    xs : 14,   // Scaled from lg (36 * 0.4 ≈ 14)
-    xxs: 11    // Scaled from lg (36 * 0.3 ≈ 11)
+    lg : 40,    // Base column count
+    md : 40,    // Maintain same columns for better scaling
+    sm : 40,    // Maintain same columns for better scaling
+    xs : 40,    // Full width on mobile
+    xxs: 40     // Full width on mobile
+};
+
+// Breakpoint width definitions (in pixels)
+const BREAKPOINTS = {
+    lg : 1200,
+    md : 996,
+    sm : 768,
+    xs : 480,
+    xxs: 0
 };
 
 // Generate layout for a specific breakpoint
 function generateBreakpointLayout(breakpoint: keyof typeof GRID_COLS): Layout[] {
-    const scale    = BREAKPOINT_SCALES[breakpoint];
-    let   currentX = 0;
-    let   currentY = 0;
-    const maxCols  = GRID_COLS[breakpoint];
+    let currentX = 0;
+    let currentY = 0;
+    const maxCols = GRID_COLS[breakpoint];
     
     return Object.entries(COMPONENTS).map(([id, config]) => {
-        // Scale and round dimensions
-        const w = Math.max(1, Math.round(config.size.w * scale));
-        const h = Math.max(1, Math.round(config.size.h * scale));
+        // Get the correct dimensions for this breakpoint
+        const dimensions = (config.type === 'summary')
+            ? SUMMARY_CARD_CONFIG.dimensions[breakpoint]
+            : config.size;
+
+        // Apply minimum dimensions
+        const w = Math.max(
+            SUMMARY_CARD_CONFIG.minDimensions.width,
+            dimensions.w
+        );
+        const h = Math.max(
+            SUMMARY_CARD_CONFIG.minDimensions.height,
+            dimensions.h
+        );
         
         // Wrap to next row if exceeding max columns
         if (currentX + w > maxCols) {
@@ -70,7 +90,9 @@ function generateBreakpointLayout(breakpoint: keyof typeof GRID_COLS): Layout[] 
             x: currentX,
             y: currentY,
             w,
-            h
+            h,
+            minW: SUMMARY_CARD_CONFIG.minDimensions.width,
+            minH: SUMMARY_CARD_CONFIG.minDimensions.height
         };
         
         currentX += w;
@@ -92,9 +114,6 @@ const ComponentRenderer = ({ type, config }: { type: string, config: any }) => {
   switch (type) {
     case 'summary':
       return <SummaryCard config={config} />;
-    case 'barChart':
-      return <BarChart config={config} />;
-    // Add other cases as needed
     default:
       return <div>Unknown component type: {type}</div>;
   }
@@ -150,10 +169,10 @@ export default function DashboardGrid() {
     }, [showGridLines]);
 
     return (
-        <div className="p-4">
+        <div className="p-2">
             
             {/* Header with controls */}
-            <div className="flex justify-between items-center mb-8">
+            <div className="flex justify-between items-center mb-4">
                 <h1 className="text-2xl font-bold text-col_text">Dashboard Grid</h1>
                 <div className="flex items-center gap-4">
                     
@@ -181,7 +200,7 @@ export default function DashboardGrid() {
             </div>
 
             {/* Grid Layout */}
-            <div ref={gridRef}>
+            <div ref={gridRef} className="p-0">
                 <ResponsiveGridLayout
                     className          = "layout"
                     layouts            = {layouts}
@@ -197,9 +216,9 @@ export default function DashboardGrid() {
                     useCSSTransforms   = {true}
                     onBreakpointChange = {(breakpoint) => {
                         console.log('Breakpoint changed:', {
-                            from: currentBreakpoint,
-                            to: breakpoint,
-                            scale: BREAKPOINT_SCALES[breakpoint as keyof typeof GRID_COLS],
+                            from   : currentBreakpoint,
+                            to     : breakpoint,
+                            scale  : BREAKPOINT_SCALES[breakpoint as keyof typeof GRID_COLS],
                             columns: GRID_COLS[breakpoint as keyof typeof GRID_COLS]
                         });
                         setCurrentBreakpoint(breakpoint as keyof typeof GRID_COLS);
@@ -207,8 +226,8 @@ export default function DashboardGrid() {
                     onLayoutChange={(_, allLayouts) => {
                         console.log('Layout changed:', {
                             breakpoint: currentBreakpoint,
-                            itemCount: Object.keys(COMPONENTS).length,
-                            layouts: allLayouts
+                            itemCount : Object.keys(COMPONENTS).length,
+                            layouts   : allLayouts
                         });
                         setLayouts(allLayouts);
                     }}
