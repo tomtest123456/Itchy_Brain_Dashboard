@@ -1,0 +1,125 @@
+/* 
+    /src/app/dashboard/components/ScatterPlot/styles.css
+    -----------------------------------------------------
+    Scatter Plot Styling:
+    - Maintains consistent chart appearance
+    - Handles responsive layout and scaling
+    - Optimizes spacing and padding for better data visibility
+*/
+
+/* Container for the entire scatter plot card */
+.scatter-plot {
+    @apply flex flex-col w-full h-full
+           bg-col_background 
+           border border-col_accent 
+           rounded-lg shadow-lg 
+           relative
+           overflow-hidden
+           p-1;
+    /* Ensure min-height is allowed to shrink below parent's height */
+    min-height: 0 !important;
+}
+
+/* Content wrapper inside the main container */
+.scatter-plot-content {
+    @apply w-full h-full flex flex-col relative;
+    min-height: 0 !important; /* Allow vertical shrink/grow */
+}
+
+/* Title Section */
+.scatter-plot-title {
+    @apply w-full text-center text-col_text text-xs font-medium py-0.5;
+}
+
+/* The actual chart container */
+.scatter-plot-chart {
+    @apply flex-1 w-full h-full relative;
+    /* Force the child to fill the available vertical space */
+    min-height: 0 !important;
+}
+
+/* The Nivo chart's internal div must fill entire container */
+.scatter-plot-chart > div {
+    @apply absolute inset-0;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Error State */
+.scatter-plot-error {
+    @apply flex items-center justify-center
+           border border-col_alert
+           rounded-lg shadow-lg 
+           p-4 
+           text-col_alert text-sm;
+}
+
+/* Loading State */
+.scatter-plot-loading {
+    @apply flex items-center justify-center
+           text-col_text/50 text-sm;
+}
+
+/* Tooltip Styling */
+.scatter-plot-tooltip {
+    @apply bg-col_background
+           border border-col_accent
+           rounded-md p-2
+           text-col_text;
+}
+
+.scatter-plot-tooltip strong {
+    @apply text-col_text text-sm font-medium block mb-1;
+}
+
+.scatter-plot-tooltip div {
+    @apply text-col_text/80 text-xs;
+}
+
+/* Grid Lines Styling */
+.scatter-plot-grid {
+    @apply stroke-col_primary/20;
+    stroke-width: 1;
+}
+
+/* Axis Lines Styling */
+.scatter-plot-axis {
+    @apply stroke-col_text/70;
+    stroke-width: 1;
+}
+
+/* CSS Variables for dynamic values */
+:root {
+    --scatter-plot-padding: 1rem;
+}
+
+/* Responsive Adjustments */
+@screen sm {
+    .scatter-plot {
+        @apply p-2;
+    }
+    .scatter-plot-title {
+        @apply text-sm py-1;
+    }
+    .scatter-plot-chart {
+        min-height: 200px;
+    }
+}
+
+@screen md {
+    .scatter-plot {
+        @apply p-3;
+    }
+    .scatter-plot-title {
+        @apply text-base;
+    }
+    .scatter-plot-chart {
+        min-height: 250px;
+    }
+}
+
+@screen lg {
+    .scatter-plot-chart {
+        min-height: 300px;
+    }
+}

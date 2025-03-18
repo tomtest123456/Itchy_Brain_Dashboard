@@ -11,9 +11,9 @@
 import type { MetricId } from './metricDefinitions';
 
 // Component Types
-export type ComponentType = 'summary' | 'barChart' | 'lineChart' | 'pieChart';
+export type ComponentType = 'summary' | 'barChart' | 'lineChart' | 'pieChart' | 'scatter';
 
-// Base configuration interface for all components
+// Base configuration shared by all components
 export interface BaseComponentConfig {
     id   : string;
     type : ComponentType;
@@ -33,14 +33,12 @@ export interface SummaryCardConfig extends BaseComponentConfig {
 
 // Chart specific configuration
 export interface ChartConfig extends BaseComponentConfig {
-    type : 'barChart' | 'lineChart' | 'pieChart';
-    xAxis: {
-        label: string;
-        type : 'time' | 'category' | 'number';
-    };
-    yAxis: {
-        label: string;
-        type : 'number';
+    type : 'barChart' | 'lineChart' | 'pieChart' | 'scatter';
+    dimensions?: {
+        [key: string]: {
+            w: number;
+            h: number;
+        };
     };
 }
 

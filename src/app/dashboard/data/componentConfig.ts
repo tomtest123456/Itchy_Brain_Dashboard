@@ -10,6 +10,7 @@
 
 import { SummaryCardConfig, ChartConfig } from './types';
 import { SUMMARY_CARD_CONFIG } from '../components/SummaryCard/config';
+import { SCATTER_PLOT_CONFIG } from '../components/ScatterPlot/config';
 
 // Base size configurations for non-summary components
 const BASE_SIZES = {
@@ -112,5 +113,14 @@ export const COMPONENTS: Record<string, SummaryCardConfig | ChartConfig> = {
     //         label: 'Elevation (m)',
     //         type: 'number'
     //     }
-    // }
+    // },
+
+    // Scatter Plots
+    scatter_distanceSpeed: {
+        id    : 'scatter_distanceSpeed',
+        type  : 'scatter',
+        title : 'Distance vs. Speed',
+        size  : SCATTER_PLOT_CONFIG.dimensions.lg,
+        dimensions: SCATTER_PLOT_CONFIG.dimensions
+    }
 }; 

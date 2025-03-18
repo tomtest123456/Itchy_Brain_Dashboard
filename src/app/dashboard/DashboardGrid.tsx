@@ -22,8 +22,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Responsive, WidthProvider, Layout, Layouts } from "react-grid-layout";
 import SummaryCard from "./components/SummaryCard/index";
+import ScatterPlot from "./components/ScatterPlot/index";
 import { COMPONENTS } from "./data/componentConfig";
 import { SUMMARY_CARD_CONFIG } from "./components/SummaryCard/config";
+import { SCATTER_PLOT_CONFIG } from "./components/ScatterPlot/config";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import "./styles/Dashboard.css";
@@ -65,9 +67,14 @@ function generateBreakpointLayout(breakpoint: keyof typeof GRID_COLS): Layout[] 
     
     return Object.entries(COMPONENTS).map(([id, config]) => {
         // Get the correct dimensions for this breakpoint
-        const dimensions = (config.type === 'summary')
-            ? SUMMARY_CARD_CONFIG.dimensions[breakpoint]
-            : config.size;
+        let dimensions;
+        if (config.type === 'summary') {
+            dimensions = SUMMARY_CARD_CONFIG.dimensions[breakpoint];
+        } else if (config.type === 'scatter' && config.dimensions) {
+            dimensions = config.dimensions[breakpoint];
+        } else {
+            dimensions = config.size;
+        }
 
         // Apply minimum dimensions
         const w = Math.max(
@@ -109,22 +116,27 @@ const defaultLayout: Layouts = {
     xxs: generateBreakpointLayout('xxs')
 };
 
-// Create a component mapper to handle different component types
-const ComponentRenderer = ({ type, config }: { type: string, config: any }) => {
-  switch (type) {
-    case 'summary':
-      return <SummaryCard config={config} />;
-    default:
-      return <div>Unknown component type: {type}</div>;
-  }
-};
-
 export default function DashboardGrid() {
     const gridRef                                   = useRef<HTMLDivElement>(null);
     const [windowSize, setWindowSize]               = useState({ width: 0, height: 0 });
     const [layouts, setLayouts]                     = useState<Layouts>(defaultLayout);
     const [currentBreakpoint, setCurrentBreakpoint] = useState<keyof typeof GRID_COLS>("lg");
     const [showGridLines, setShowGridLines]         = useState(true);
+
+    // Create a component mapper to handle different component types
+    const ComponentRenderer = ({ type, config }: { type: string, config: any }) => {
+        switch (type) {
+            case 'summary':
+                return <SummaryCard config={config} />;
+            case 'scatter':
+                return <ScatterPlot 
+                    title={config.title}
+                    breakpoint={currentBreakpoint}
+                />;
+            default:
+                return <div>Unknown component type: {type}</div>;
+        }
+    };
 
     // Log grid measurements
     useEffect(() => {
